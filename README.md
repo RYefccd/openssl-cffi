@@ -27,3 +27,14 @@ gmssl 是基于 openssl 1.1.x 的 fork 版本, 所以有些EVP的接口发生了
 This is example code for wrapping openssl with cffi. More information in the blog post:
 
 [Using Openssl From Python With `python-cffi`](https://gist.github.com/vishvananda/980132c0970f8621bb3c)
+
+
+
+geetest_sm2_test.c demo
+====================================
+
+安装好 gmssl 后,  执行下列代码测试
+
+    gcc geetest_sm2_test.c -o test -lcrypto
+    ./test
+
