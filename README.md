@@ -38,3 +38,5 @@ geetest_sm2_test.c demo
     gcc geetest_sm2_test.c -o test -lcrypto
     ./test
 
+
+sm2tool.py 包含相关的 asn.1/der 和 sm2 密文 c1c3c2 之间的转换函数.
