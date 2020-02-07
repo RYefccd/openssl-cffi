@@ -1,0 +1,6 @@
+
+
+# to use SM2_ciphertext_size function, we need include this header file and comile with the soure file.
+# 
+
+gcc sm2_test.c /home/ryefccd/github/GmSSL/crypto/sm2/sm2_asn1.c -o sm2_test -lcrypto -I /home/ryefccd/github/GmSSL/crypto/sm2/
