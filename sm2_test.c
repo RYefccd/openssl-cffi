@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//#include "../e_os.h"
 
 # include <openssl/bn.h>
 # include <openssl/ec.h>
@@ -9,8 +8,6 @@
 # include <openssl/rand.h>
 # include <openssl/engine.h>
 # include <openssl/sm2.h>
-# include "sm2_lcl.h"
-//# include "../crypto/sm2/sm2_lcl.h"
 
 
 # define VERBOSE 1
@@ -345,17 +342,6 @@ static int sm2_demo_with_recommended(const EC_GROUP *group,
 	if (!(pri_key = new_ec_key(group, d, xP, yP))) {
 		goto end;
 	}
-
-
-//      don't know how to link SM2_ciphertext_size symbols
-        int inlen = strlen(M);
-        int in_c_len;
-	if (!(in_c_len = SM2_ciphertext_size(pub_key, inlen))) {
-		SM2err(SM2_F_SM2_ENCRYPT, ERR_R_SM2_LIB);
-		return 0;
-	}
-        printf("origin message len: %d\n", inlen);
-        printf("SM2_ciphertext_size len: %d\n\n", in_c_len);
 
        //SM2_encrypt_with_recommended(in,inlen,out,outlen,ec_key)
        SM2_encrypt_with_recommended((unsigned char *)M, strlen(M), c_buf, &c_len, pub_key);

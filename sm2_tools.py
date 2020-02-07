@@ -10,7 +10,7 @@ def decode_sm2_asn1_ciphter_txt(cm): # decode to c1c3c2 bytes
     assert tmp[1] == len(tmp[2:])       # length 
 
     x_start = 2 
-    assert tmp[x_start] == bytes.fromhex("02")[0], "asn.1 C1_x tag error"  # next type is interger asn.1 type hex 02, for C1_x 
+    assert tmp[x_start] == bytes.fromhex("02")[0], "asn.1 C1_x tag error"  # next type is interger asn.1 type hex 02, for C1_x
     x_len = tmp[x_start+1]
     x_end = x_start + 2 + x_len 
     C1_x = tmp[x_end-x_len:x_end] # next 20(hex, real is 32) bytes is C1_x 
@@ -20,7 +20,7 @@ def decode_sm2_asn1_ciphter_txt(cm): # decode to c1c3c2 bytes
     y_start = x_end
     print(tmp[y_start:y_start+1]) 
     print(tmp[y_start])
-    assert tmp[y_start] == bytes.fromhex("02")[0], "asn.1 C1_y tag error"  # next type is interger asn.1 type hex 02, for C1_y 
+    assert tmp[y_start] == bytes.fromhex("02")[0], "asn.1 C1_y tag error"  # next type is interger asn.1 type hex 02, for C1_y
     y_len = tmp[y_start+1] 
     y_end = y_start + 2 + y_len 
     C1_y = tmp[y_end-y_len:y_end] 
@@ -32,7 +32,7 @@ def decode_sm2_asn1_ciphter_txt(cm): # decode to c1c3c2 bytes
     C3 = tmp[C3_end-C3_len:C3_end] 
      
     C2_start = C3_end
-    assert tmp[C2_start] == bytes.fromhex("04")[0], "asn.1 C2 tag error"  # asn.1 type 04(hex) type is bytes, C2 is cipher bytes 
+    assert tmp[C2_start] == bytes.fromhex("04")[0], "asn.1 C2 tag error"  # asn.1 type 04(hex) type is bytes, C2 is cipher bytes
     C2_len = tmp[C2_start+1] 
     C2_end = C2_start + 2 + C2_len 
     C2 = tmp[C2_end-C2_len:C2_end] 
