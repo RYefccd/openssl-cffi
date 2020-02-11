@@ -103,7 +103,8 @@ size_t gee_str_len(const unsigned char *s)
 {
         size_t i = 0;
         while (s[i++]!='\\0');
-        return i;
+        return i - 1 ;
+//        return strlen((const char *)s);
 }
 
 int sm2_encrypt_ffi(
@@ -197,10 +198,26 @@ def sm2_decrypt_cffi(data):
     return ffi_bytes
 
 
+from sm2_tools import decode_sm2_asn1_ciphter_txt
 
 data = "0123456789abcdef"
+data = "fccdjny"
 cb = sm2_encrypt_cffi(data)
 print("cipher bytes:", cb)
 print(len(cb))
 msg = sm2_decrypt_cffi(cb)
 print("msg:", msg)
+
+print("c1c3c2:")
+print(decode_sm2_asn1_ciphter_txt(bytes.fromhex(cb.decode("iso-8859-1"))).hex())
+
+print("------------------------------")
+print("python gmssl encode bytes:")
+cb = b'306f0220dda0ba8c746e48d04c6dedaf896e82382bfc9f70345ac3f5147d9592ac0e27330220e3d1c9c763a1d48a8d8c192b88aa3002649d9c04b458f05031ff4d301c397e9604208a257eb47b84a22c94f5a847d8d25f9b1c9f76fb9b333a6f270cf2f9a5a945420407290d2ddaa7b5bd'
+print("cipher bytes:", cb)
+print(len(cb))
+msg = sm2_decrypt_cffi(cb)
+print("msg:", msg)
+print("c1c3c2:")
+print(decode_sm2_asn1_ciphter_txt(bytes.fromhex(cb.decode("iso-8859-1"))).hex())
+

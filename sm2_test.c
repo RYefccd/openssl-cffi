@@ -277,6 +277,7 @@ static int sm2_demo_with_do_XXX(const EC_GROUP *group, const EVP_MD *md,
 		goto end;
 	}
 
+        printf("\nsm2_demo_with_do_XXX\n");
         printf("use SM2_do_encrypt \n");
 
 	p = cbuf;
@@ -355,6 +356,7 @@ static int sm2_demo_with_recommended(const EC_GROUP *group,
        printf("origin  message: %s \n", M);
        printf("decrypt message: %s \n", m_buf);
        ret = 1;
+
 end:
 	ERR_print_errors_fp(stderr);
 	restore_rand();

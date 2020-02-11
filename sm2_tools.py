@@ -4,8 +4,8 @@ def decode_sm2_asn1_ciphter_txt(cm): # decode to c1c3c2 bytes
     else: 
         tmp = cm 
 
-    print(tmp)
-    print(bytes.fromhex("30"))
+    # print(tmp)
+    # print(bytes.fromhex("30"))
     assert tmp[0] == bytes.fromhex("30")[0]  # sequence 
     assert tmp[1] == len(tmp[2:])       # length 
 
@@ -14,12 +14,12 @@ def decode_sm2_asn1_ciphter_txt(cm): # decode to c1c3c2 bytes
     x_len = tmp[x_start+1]
     x_end = x_start + 2 + x_len 
     C1_x = tmp[x_end-x_len:x_end] # next 20(hex, real is 32) bytes is C1_x 
-    print("c1_x:",C1_x.hex())
+    #print("c1_x:",C1_x.hex())
 
-    print("x_end:",x_end)
+    #print("x_end:",x_end)
     y_start = x_end
-    print(tmp[y_start:y_start+1]) 
-    print(tmp[y_start])
+    #print(tmp[y_start:y_start+1]) 
+    #print(tmp[y_start])
     assert tmp[y_start] == bytes.fromhex("02")[0], "asn.1 C1_y tag error"  # next type is interger asn.1 type hex 02, for C1_y
     y_len = tmp[y_start+1] 
     y_end = y_start + 2 + y_len 
