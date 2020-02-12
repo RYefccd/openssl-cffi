@@ -1,3 +1,4 @@
+
 def decode_sm2_asn1_ciphter_txt(cm): # decode to c1c3c2 bytes
     if type(cm) == str: 
         tmp = bytes.fromhex(cm) 
@@ -7,9 +8,20 @@ def decode_sm2_asn1_ciphter_txt(cm): # decode to c1c3c2 bytes
     # print(tmp)
     # print(bytes.fromhex("30"))
     assert tmp[0] == bytes.fromhex("30")[0]  # sequence 
-    assert tmp[1] == len(tmp[2:])       # length 
+    tlen_start = 1 
+    if tmp[tlen_start] < 128:
+        tlen_end = tlen_start + 1
+        t_len = tmp[tlen_start]
+    else:
+        length_length = tmp[tlen_start] - 128
+        tlen_end = tlen_start + 1 + length_length
+        t_len_bytes = tmp[tlen_end - length_length: tlen_end]
+        t_len = int.from_bytes(t_len_bytes, "big")
 
-    x_start = 2 
+    assert t_len == len(tmp[tlen_end:])
+    # assert tmp[1] == len(tmp[2:])       # length 
+
+    x_start = tlen_end 
     assert tmp[x_start] == bytes.fromhex("02")[0], "asn.1 C1_x tag error"  # next type is interger asn.1 type hex 02, for C1_x
     x_len = tmp[x_start+1]
     x_end = x_start + 2 + x_len 
@@ -32,14 +44,39 @@ def decode_sm2_asn1_ciphter_txt(cm): # decode to c1c3c2 bytes
     C3 = tmp[C3_end-C3_len:C3_end] 
      
     C2_start = C3_end
+    #print("full C2:")
+    #print(tmp[C2_start:])
     assert tmp[C2_start] == bytes.fromhex("04")[0], "asn.1 C2 tag error"  # asn.1 type 04(hex) type is bytes, C2 is cipher bytes
-    C2_len = tmp[C2_start+1] 
-    C2_end = C2_start + 2 + C2_len 
-    C2 = tmp[C2_end-C2_len:C2_end] 
-    
+    C2_len_start = C2_start + 1
+    if tmp[C2_len_start] < 128:
+        C2_len_end = C2_len_start + 1
+        C2_len = tmp[tlen_start]
+    else:
+        #print("tmp[C2_len_start:]", tmp[C2_len_start:])
+        C2_len_length = tmp[C2_len_start] - 128
+        C2_len_end = C2_len_start + 1 + C2_len_length
+        C2_len_bytes = tmp[C2_len_end - C2_len_length: C2_len_end]
+        C2_len = int.from_bytes(C2_len_bytes, "big")
+
+    #print("C2_len_end:", C2_len_end)
+    #print("C2_len:", C2_len)
+    C2_end = C2_len_end + C2_len 
+    C2 = tmp[C2_end - C2_len:C2_end] 
+    #print("C2:", C2.hex())    
+    #print("C2 end:", C2_end)
+
     # C1_x, C1_y only get 32 bytes
     c1c3c2 = b''.join([C1_x[-32:], C1_y[-32:], C3, C2]) 
     # c1c3c2 = b''.join([C1_x, C1_y, C3, C2]) 
+    #print("C1x:")
+    #print(C1_x[-32:].hex())
+    #print("C1_y:")
+    #print(C1_y[-32:].hex())
+    #print("C3:")
+    #print(C3.hex())
+    #print("C2:")
+    #print(C2.hex())
+    #print("len(C2):", len(C2))
     return c1c3c2
 
 
@@ -64,10 +101,24 @@ def encode_sm2_asn1_ciphter_txt(c1c3c2): # c1c3c2 encode to sm2_asn1_ciphter byt
 
     C3_ber = b''.join([bytes.fromhex("04"), bytes([len(C3)]), C3])
 
-    C2_ber = b''.join([bytes.fromhex("04"), bytes([len(C2)]), C2])
+    #print("c2 byts:", C2)
+    if len(C2) > 127:
+        C2_lenth_bytes = bytes([i for i in len(C2).to_bytes(4, "big") if i != 0])
+        C2_len_beta_bytes = bytes([128 + len(C2_lenth_bytes)]) + C2_lenth_bytes
+        #print("C2_len_beta_bytes:", C2_len_beta_bytes)
+    else:
+        C2_len_beta_bytes = bytes([len(C2)])
+    C2_ber = b''.join([bytes.fromhex("04"), C2_len_beta_bytes, C2])
 
     f_value = b''.join([C1_x_ber, C1_y_ber, C3_ber, C2_ber])
-    f_bytes = b''.join([bytes.fromhex("30"), bytes([len(f_value)]), f_value])
+    #print("totla message bytes:", len(f_value))
+    if len(f_value) > 127:
+        tlenth_bytes = bytes([i for i in len(f_value).to_bytes(4, "big") if i != 0])
+        tlen_meta_bytes = bytes([128 + len(tlenth_bytes)]) + tlenth_bytes
+    else:
+        tlen_meta_bytes = bytes([len(f_value)])
+
+    f_bytes = b''.join([bytes.fromhex("30"), tlen_meta_bytes, f_value])
     return f_bytes
 
 
