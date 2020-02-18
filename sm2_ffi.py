@@ -186,18 +186,18 @@ def sm2_encrypt_cffi(data):
 #    key_bytes = key.encode()
     datalen = len(inbuf)
     print("datalen:", datalen)
-    out = _FFI.new("unsigned char[%s]" % (datalen * 2 + 126 * 2))
+    out = _FFI.new("char[%s]" % (datalen * 2 + 126 * 2))
     num = _C.sm2_encrypt_ffi(d_bytes, xP_bytes, yP_bytes, inbuf, out)
     print("encrypt buf len:",num)
-    ffi_bytes = _FFI.string(out, num)
+    ffi_bytes = _FFI.unpack(out, num)
     #print("ffi_ecb_encrypt:", ffi_bytes)
     return ffi_bytes
 
 def sm2_decrypt_cffi(data):
     datalen = len(data)
-    out = _FFI.new("unsigned char[%s]" % (datalen))
+    out = _FFI.new("char[%s]" % (datalen))
     num = _C.sm2_decrypt_ffi(d_bytes, xP_bytes, yP_bytes, data, datalen, out)
-    ffi_bytes = _FFI.string(out, num)
+    ffi_bytes = _FFI.unpack(out, num)
     return ffi_bytes
 
 
