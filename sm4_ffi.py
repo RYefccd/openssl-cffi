@@ -99,26 +99,27 @@ enc_bytes = sm4_encrypt_cffi(data, key, iv)
 msg = sm4_decrypt_cffi(enc_bytes, key, iv)
 
 assert msg == data
+print("origin  msg:", data)
+print("encrypt txt:", enc_bytes)
+print("decrypt txt:", msg)
 
-from gmssl.sm4 import CryptSM4, SM4_ENCRYPT, SM4_DECRYPT
-crypt_sm4 = CryptSM4()
-crypt_sm4.set_key(key, SM4_DECRYPT)
-python_decrypt_msg = crypt_sm4.crypt_cbc(iv , enc_bytes)
-assert python_decrypt_msg == data, "gmssl encrypt, python sm4 decrypt error!" 
-
-
-
-
-##### test case 2 (pythom sm4)
-from gmssl.sm4 import CryptSM4, SM4_ENCRYPT, SM4_DECRYPT
-crypt_sm4 = CryptSM4()
-crypt_sm4.set_key(key, SM4_ENCRYPT)
-encrypt_value = crypt_sm4.crypt_cbc(iv , data)
-# print("pythom sm4 enc bytes:", encrypt_value)
-assert encrypt_value == enc_bytes
-crypt_sm4.set_key(key, SM4_DECRYPT)
-decrypt_value = crypt_sm4.crypt_cbc(iv , encrypt_value)
-assert data == decrypt_value
+#from gmssl.sm4 import CryptSM4, SM4_ENCRYPT, SM4_DECRYPT
+#crypt_sm4 = CryptSM4()
+#crypt_sm4.set_key(key, SM4_DECRYPT)
+#python_decrypt_msg = crypt_sm4.crypt_cbc(iv , enc_bytes)
+#assert python_decrypt_msg == data, "gmssl encrypt, python sm4 decrypt error!" 
+#
+#
+###### test case 2 (pythom sm4)
+#from gmssl.sm4 import CryptSM4, SM4_ENCRYPT, SM4_DECRYPT
+#crypt_sm4 = CryptSM4()
+#crypt_sm4.set_key(key, SM4_ENCRYPT)
+#encrypt_value = crypt_sm4.crypt_cbc(iv , data)
+## print("pythom sm4 enc bytes:", encrypt_value)
+#assert encrypt_value == enc_bytes
+#crypt_sm4.set_key(key, SM4_DECRYPT)
+#decrypt_value = crypt_sm4.crypt_cbc(iv , encrypt_value)
+#assert data == decrypt_value
 
 
 

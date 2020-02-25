@@ -215,15 +215,15 @@ print("c1c3c2:")
 print(decode_sm2_asn1_ciphter_txt(bytes.fromhex(cb.decode("iso-8859-1"))).hex())
 
 
-print("------------------------------")
-print("python gmssl encode bytes:")
-cb = b'306f0220dda0ba8c746e48d04c6dedaf896e82382bfc9f70345ac3f5147d9592ac0e27330220e3d1c9c763a1d48a8d8c192b88aa3002649d9c04b458f05031ff4d301c397e9604208a257eb47b84a22c94f5a847d8d25f9b1c9f76fb9b333a6f270cf2f9a5a945420407290d2ddaa7b5bd'
-print("cipher bytes:", cb)
-print(len(cb))
-msg = sm2_decrypt_cffi(cb)
-print("msg:", msg)
-print("c1c3c2:")
-print(decode_sm2_asn1_ciphter_txt(bytes.fromhex(cb.decode("iso-8859-1"))).hex())
+#print("------------------------------")
+#print("python gmssl encode bytes:")
+#cb = b'306f0220dda0ba8c746e48d04c6dedaf896e82382bfc9f70345ac3f5147d9592ac0e27330220e3d1c9c763a1d48a8d8c192b88aa3002649d9c04b458f05031ff4d301c397e9604208a257eb47b84a22c94f5a847d8d25f9b1c9f76fb9b333a6f270cf2f9a5a945420407290d2ddaa7b5bd'
+#print("cipher bytes:", cb)
+#print(len(cb))
+#msg = sm2_decrypt_cffi(cb)
+#print("msg:", msg)
+#print("c1c3c2:")
+#print(decode_sm2_asn1_ciphter_txt(bytes.fromhex(cb.decode("iso-8859-1"))).hex())
 
 #print("--------xuwei decode----------------------")
 #data ="3444363d553e7859a36bd3619156286fef8eea92b65724bcf24ca83b9cfdfa3d9d6e9aaf8b0659b0b549e3d484295c90d0df1a403018104f5d08b73ddd9a6a0b6b0ef0945c55039d967d9ef7d6f10591e33b4bbf08c5e13a2bfda9b2498a3bdc77bb704caf8b6f2af0b11a280f58e2611b0221b348d0fe6b95844d44ace022a6fe8974642a816d69944d846f53c5afb5240f9e58fa04e31d662f3b46816f966f4da218d2bf1f10c446f5fa6ab30cbca687dc1ce2847d23887ff62acfc74219b029f31670551014e040d90fd0d1ef7be17dfd8ea1fa05c60b1873b2b6628e6f8e8feea888eb32b79556d92a55cb1c5ee050eff00deaa50d218793d261251e328a42d2289c516b9a5ec506be5efd1b4a073cf5cfd8433cc25c7c3dd5a294cd095e4f726c38201cf18dd78ff900e45613b8a937eb74720ba91d96ccb9d841fb04ca9caedd1e47becc266376f814a5314a939f7198c78f92de0dc771820bd22ad24335aec65d539ea2d480f52ef7f933f5548155874fe43a6bf0a72179feb1c18aeafb63907f3a5c9fbbeee12e1e4d33c06e635d335588bbc5fb831c3392a6a35b2ab56e67f47b769803233df455fd788f50c9814797522b6aeaed34984c2503bf07eddc66152bc9a1203914f40d637a90cd8931ad4ff3dd85ccc5c71dd701879c6b9f990d3cbc1959cb834e32310c4d0ff09aa48fa3b772eb44376a833ed1e95683"
@@ -233,26 +233,26 @@ print(decode_sm2_asn1_ciphter_txt(bytes.fromhex(cb.decode("iso-8859-1"))).hex())
 #print("xw msg:", msg)
 
 
-print("--------python gmssl encrypt, openssl gmssl decrypt----------------------")
-public_key = 'bbfbc5430dab854342462de4af7da4daa0b3613552c09c4c8d5b5c9e1eabb298410bceebd0e9171229621e1f2af59cab715079720009d6190a106aab76386cac'
-private_key = '42c37b287a1c218d76112208cdbc4a5fc17dd0d2ef76ca06df63e652e4e660c6'
-
-import sys
-from gmssl import sm2, func
-
-sm2_crypt = sm2.CryptSM2(
-    public_key=public_key, private_key=private_key)
-
-print("argv:", sys.argv)
-assert len(sys.argv) == 2, "please input data after python sm2.py"
-
-
-data =  sys.argv[1].encode()  #"fccdj"
-print("input:", data)
-enc_data = sm2_crypt.encrypt(data)
-asn1_bytes = encode_sm2_asn1_ciphter_txt(enc_data).hex().encode("iso-8859-1")
-print("asn1_hex_str:", asn1_bytes)
-msg = sm2_decrypt_cffi(asn1_bytes)
-print("msg:", msg)
+#print("--------python gmssl encrypt, openssl gmssl decrypt----------------------")
+#public_key = 'bbfbc5430dab854342462de4af7da4daa0b3613552c09c4c8d5b5c9e1eabb298410bceebd0e9171229621e1f2af59cab715079720009d6190a106aab76386cac'
+#private_key = '42c37b287a1c218d76112208cdbc4a5fc17dd0d2ef76ca06df63e652e4e660c6'
+#
+#import sys
+#from gmssl import sm2, func
+#
+#sm2_crypt = sm2.CryptSM2(
+#    public_key=public_key, private_key=private_key)
+#
+#print("argv:", sys.argv)
+#assert len(sys.argv) == 2, "please input data after python sm2.py"
+#
+#
+#data =  sys.argv[1].encode()  #"fccdj"
+#print("input:", data)
+#enc_data = sm2_crypt.encrypt(data)
+#asn1_bytes = encode_sm2_asn1_ciphter_txt(enc_data).hex().encode("iso-8859-1")
+#print("asn1_hex_str:", asn1_bytes)
+#msg = sm2_decrypt_cffi(asn1_bytes)
+#print("msg:", msg)
 
 
