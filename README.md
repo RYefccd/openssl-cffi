@@ -58,23 +58,44 @@ python 封装调用 c 库的方法来提高解密的效率(直接把后续解密
 
    [zip]: <https://github.com/guanzhi/GmSSL/archive/master.zip>
    
-   
-###  sm2测试
 
+测试的代码仓库如下:
+https://git.gtapp.xyz/backend/g1/gmssl_cffi/tree/master
+
+ 
+###  sm2测试
+python sm2_ffi.py 
+
+示例如下:
+
+
+```shell
+(gmssl) ryefccd@fccd:~/github/RYefccd/openssl-cffi$ python sm2_ffi.py 
+datalen: 16
+encrypt buf len: 244
+244
+msg: b'0123456789abcdef'
+len(msg): 16
+c1c3c2:
+48561d60dbff96f7928a15c9448f6567fb1ec3faaa091005a40a0a43b8a2d19b17036b1c5a722b58bd33980d38f66d11ffc331e125a0c1ab61d27f2927bbf44af64ebef12fcd3a5f564d11f2c402fa9431ffa8888895127bd2a2467293692deef9c1713c4b138392c31bbeacfd8233b1
+
+
+
+```
 
 
 ###  sm4测试
+python sm4_ffi.py 
 
+示例如下:
 
+```shell
+(gmssl) ryefccd@fccd:~/github/RYefccd/openssl-cffi$ python sm4_ffi.py 
+origin  msg: b'fccdjnyfccdjnyfccdjny'
+encrypt txt: b'\xf8!\x1b\xf75\x94@&:C\xd2\xc74\x0bz\x1a\xac\xe4\x8ch\x97\xd5B\xae\xd6V\xa11\x98\xb4\x01\x1d'
+decrypt txt: b'fccdjnyfccdjnyfccdjny'
 
-
-
-
-
-
-
-
-
+```
 
 
 
