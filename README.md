@@ -5,7 +5,7 @@ python 封装调用 c 库的方法来提高解密的效率(直接把后续解密
 
 提纲:
 
-  - 编译工具 (gcc make 等)
+  - 编译工具 (gcc make 等) 和开发库
             
         # ubuntu
         sudo apt-get install build-essential
@@ -17,13 +17,14 @@ python 封装调用 c 库的方法来提高解密的效率(直接把后续解密
 
         pip install cffi
 
-### 编译工具
+### 编译工具和开发库
   - ubuntu
     
-        sudo apt-get install build-essential
+        sudo apt-get install build-essential python3-dev libffi-dev
   - centos
     
         sudo yum groupinstall 'Development Tools'
+        sudo yum install python3-devel libffi-devel
 
 ### gmssl
 
@@ -135,12 +136,11 @@ This is example code for wrapping openssl with cffi. More information in the blo
 
 
 c语言 demo
-====================================
 
-安装好 gmssl 后,  执行下列代码测试
+在 test 文件夹中的是 c 测试代码(安装好 gmssl 后),  执行下列代码测试
 
-    gcc geetest_sm2_test.c -o test -lcrypto
-    ./test
+    gcc sm2_test.c -o sm2_test -lcrypto
+    ./sm2_test
 
 
 sm2tool.py 包含相关的 asn.1/der 和 sm2 密文 c1c3c2 之间的转换函数.
