@@ -8,9 +8,10 @@ python 封装调用 c 库的方法来提高解密的效率(直接把后续解密
   - 编译工具 (gcc make 等) 和开发库
             
         # ubuntu
-        sudo apt-get install build-essential
+        sudo apt-get install build-essential python3-dev libffi-dev
         # centos
         sudo yum groupinstall 'Development Tools'
+        sudo yum install python3-devel libffi-devel
         
   - 编译安装 gmssl （提供 sm2, sm4 算法支持）
   - python 库依赖
