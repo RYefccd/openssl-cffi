@@ -33,7 +33,7 @@ python 封装调用 c 库的方法来提高解密的效率(直接把后续解密
 1. 下载源代码([zip])，解压缩至当前工作目录
 2. 编译源码
 
-       $ ./config no-saf no-sdf no-skf no-sof no-zuc
+       $ ./config
        $ make
        $ sudo make install
 
