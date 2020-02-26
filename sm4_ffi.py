@@ -49,8 +49,9 @@ int decrypt_sm4_cbc(unsigned char * input, int inLen, unsigned char * output,
 """, 
 include_dirs=["/usr/local/include/"],
 libraries=["crypto"], 
-library_dirs=["/usr/local/lib/"], 
-extra_compile_args=['-Wno-deprecated-declarations'])
+library_dirs=["/usr/local/lib/", "/usr/local/lib64/"],
+extra_link_args=["-Wl,-rpath=/usr/local/lib/", "-Wl,-rpath=/usr/local/lib64/"],
+extra_compile_args=["-Wno-deprecated-declarations"])
 
 
 def sm4_encrypt_cffi(data, key, iv):

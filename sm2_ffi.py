@@ -169,8 +169,9 @@ end:
 """, 
 include_dirs=["/usr/local/include/"],
 libraries=["crypto"], 
-library_dirs=["/usr/local/lib/"], 
-extra_compile_args=['-Wno-deprecated-declarations'])
+library_dirs=["/usr/local/lib/", "/usr/local/lib64/"],
+extra_link_args=["-Wl,-rpath=/usr/local/lib/", "-Wl,-rpath=/usr/local/lib64/"],
+extra_compile_args=["-Wno-deprecated-declarations"])
 
 
 d = b"42c37b287a1c218d76112208cdbc4a5fc17dd0d2ef76ca06df63e652e4e660c6"
