@@ -117,7 +117,7 @@ int sm2_encrypt_ffi(
         EC_GROUP *group = EC_GROUP_new_by_curve_name(NID_sm2p256v1);
 //      unsigned char cbuf[4096]={0};
 
-        size_t hexlen;
+        size_t hexlen = 0 ;
         size_t inlen = gee_str_len(in);
         size_t clen = inlen + 126;
         unsigned char cbuf[clen];
@@ -126,10 +126,15 @@ int sm2_encrypt_ffi(
 		goto end;
 	}
 
-       SM2_encrypt_with_recommended(in, inlen, cbuf, &clen, pub_key);
-
-       hexlen = bin2hex(cbuf, clen, out);
-       ret = hexlen;
+       int flag = SM2_encrypt_with_recommended(in, inlen, cbuf, &clen, pub_key);
+       if(flag > 0){
+                hexlen = bin2hex(cbuf, clen, out);
+                ret = hexlen;
+       }
+       else
+       {
+                ret = 0;
+       }
 end:
 	ERR_print_errors_fp(stderr);
 	EC_KEY_free(pub_key);
@@ -145,9 +150,9 @@ int sm2_decrypt_ffi(
 
 	int ret = 0;
 	EC_KEY *pri_key = NULL;
-        size_t outlen;
+        size_t outlen = 0;
         EC_GROUP *group = EC_GROUP_new_by_curve_name(NID_sm2p256v1);
-        long blen;
+        long blen = 0;
 
         unsigned char *bin_buf= NULL;
         bin_buf = OPENSSL_hexstr2buf((const char *)in, &blen);
@@ -156,8 +161,14 @@ int sm2_decrypt_ffi(
 		goto end;
 	}
 
-       SM2_decrypt_with_recommended(bin_buf, blen, (unsigned char *)out, &outlen, pri_key);
-       ret = outlen;
+       int flag = SM2_decrypt_with_recommended(bin_buf, blen, (unsigned char *)out, &outlen, pri_key);
+       if(flag > 0){
+                ret = outlen;
+       }
+       else
+       {
+                ret = 0;
+       }
 end:
 	ERR_print_errors_fp(stderr);
 	EC_KEY_free(pri_key);
