@@ -33,9 +33,10 @@ python 封装调用 c 库的方法来提高解密的效率(直接把后续解密
 1. 下载源代码([zip])，解压缩至当前工作目录
 2. 编译源码
 
-       $ ./config
+       $ ./config --libdir=lib -Wl,-rpath=/usr/local/lib
        $ make
        $ sudo make install
+       # 这个libdir，会默认拼接prefix(/usr/local/),最终的库文件会放在prefix/libdir/里。 就是/usr/local/lib里。
 
 3. 安装之后可以执行gmssl命令行工具检查是否成功
 
